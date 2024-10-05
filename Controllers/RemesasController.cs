@@ -1,36 +1,46 @@
 using Microsoft.AspNetCore.Mvc;
-using MELIPARCIAL.Data;
+using MELIPARCIAL.Models;
+using MELIPARCIAL.Data; 
+using Microsoft.EntityFrameworkCore; 
+using System.Threading.Tasks; 
 
-public class RemesasController : Controller
+namespace MELIPARCIAL.Controllers
 {
-    private readonly ApplicationDbContext _context;
-
-    public RemesasController(ApplicationDbContext context)
+    public class RemesasController : Controller
     {
-        _context = context;
-    }
+        private readonly ApplicationDbContext _context;
 
-    // Acciones para agregar y listar remesas
-    public IActionResult Index()
-    {
-        var remesas = _context.Remesas.ToList();
-        return View(remesas);
-    }
-
-    public IActionResult Create()
-    {
-        return View();
-    }
-
-    [HttpPost]
-    public IActionResult Create(Remesa remesa)
-    {
-        if (ModelState.IsValid)
+        public RemesasController(ApplicationDbContext context)
         {
-            _context.Remesas.Add(remesa);
-            _context.SaveChanges();
-            return RedirectToAction(nameof(Index));
+            _context = context;
         }
-        return View(remesa);
+
+        
+        public IActionResult Index()
+        {
+            var remesas = _context.Remesas.ToList(); 
+            return View(remesas);
+        }
+
+        
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Remesa remesa)
+        {
+            if (ModelState.IsValid)
+            {
+                
+                _context.Add(remesa);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(remesa); 
+        }
     }
 }

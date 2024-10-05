@@ -1,22 +1,51 @@
-@model RemesasApp.Models.Remesa
+@model MELIPARCIAL.Models.Remesa
+
 <h2>Registrar Remesa</h2>
 <form asp-action="Create">
     <label>Nombre Remitente:</label>
     <input asp-for="NombreRemitente" />
+    <span asp-validation-for="NombreRemitente" class="text-danger"></span>
+
     <label>Nombre Destinatario:</label>
     <input asp-for="NombreDestinatario" />
+    <span asp-validation-for="NombreDestinatario" class="text-danger"></span>
+
     <label>País Origen:</label>
     <input asp-for="PaisOrigen" />
+    <span asp-validation-for="PaisOrigen" class="text-danger"></span>
+
     <label>País Destino:</label>
     <input asp-for="PaisDestino" />
+    <span asp-validation-for="PaisDestino" class="text-danger"></span>
+
     <label>Monto Enviado:</label>
     <input asp-for="MontoEnviado" />
+    <span asp-validation-for="MontoEnviado" class="text-danger"></span>
+
     <label>Moneda:</label>
-    <select asp-for="Moneda">
+    <select asp-for="Moneda" class="form-control">
+        <option value="">Seleccione una moneda</option>
         <option value="USD">USD</option>
         <option value="BTC">BTC</option>
     </select>
-    <label>Estado:</label>
-    <input asp-for="Estado" />
+    <span asp-validation-for="Moneda" class="text-danger"></span>
+
+    <label>Tasa de Cambio:</label>
+    <input asp-for="TasaCambio" />
+    <span asp-validation-for="TasaCambio" class="text-danger"></span>
+
+    <label>Monto Final:</label>
+    <input asp-for="MontoFinal" />
+    <span asp-validation-for="MontoFinal" class="text-danger"></span>
+
+    <label>Estado de Transacción:</label>
+    <select asp-for="EstadoTransaccion" class="form-control">
+        <option value="">Seleccione un estado</option>
+        <option value="Completada">Completada</option>
+        <option value="Pendiente">Pendiente</option>
+        <option value="Cancelada">Cancelada</option>
+    </select>
+    <span asp-validation-for="EstadoTransaccion" class="text-danger"></span>
+
     <button type="submit">Registrar</button>
 </form>
