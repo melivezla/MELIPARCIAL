@@ -1,26 +1,51 @@
-@model IEnumerable<RemesasApp.Models.Remesa>
-<h2>Listado de Remesas</h2>
-<table>
+@model IEnumerable<MELIPARCIAL.Models.Remesa>
+
+@{
+    ViewData["Title"] = "Lista de Remesas";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Crear Nueva Remesa</a>
+</p>
+
+<table class="table">
     <thead>
         <tr>
+            <th>Id</th>
             <th>Nombre Remitente</th>
             <th>Nombre Destinatario</th>
+            <th>País Origen</th>
+            <th>País Destino</th>
             <th>Monto Enviado</th>
             <th>Moneda</th>
-            <th>Estado</th>
+            <th>Tasa de Cambio</th>
+            <th>Monto Final</th>
+            <th>Estado de Transacción</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var remesa in Model)
         {
             <tr>
+                <td>@remesa.Id</td>
                 <td>@remesa.NombreRemitente</td>
                 <td>@remesa.NombreDestinatario</td>
+                <td>@remesa.PaisOrigen</td>
+                <td>@remesa.PaisDestino</td>
                 <td>@remesa.MontoEnviado</td>
                 <td>@remesa.Moneda</td>
-                <td>@remesa.Estado</td>
+                <td>@remesa.TasaCambio</td>
+                <td>@remesa.MontoFinal</td>
+                <td>@remesa.EstadoTransaccion</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@remesa.Id" class="btn btn-warning">Editar</a>
+                    <a asp-action="Details" asp-route-id="@remesa.Id" class="btn btn-info">Detalles</a>
+                    <a asp-action="Delete" asp-route-id="@remesa.Id" class="btn btn-danger">Eliminar</a>
+                </td>
             </tr>
         }
     </tbody>
 </table>
-<a href="@Url.Action("Create")">Registrar Nueva Remesa</a>
