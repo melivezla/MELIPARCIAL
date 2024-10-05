@@ -1,0 +1,26 @@
+@model IEnumerable<RemesasApp.Models.Remesa>
+<h2>Listado de Remesas</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Nombre Remitente</th>
+            <th>Nombre Destinatario</th>
+            <th>Monto Enviado</th>
+            <th>Moneda</th>
+            <th>Estado</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var remesa in Model)
+        {
+            <tr>
+                <td>@remesa.NombreRemitente</td>
+                <td>@remesa.NombreDestinatario</td>
+                <td>@remesa.MontoEnviado</td>
+                <td>@remesa.Moneda</td>
+                <td>@remesa.Estado</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a href="@Url.Action("Create")">Registrar Nueva Remesa</a>
