@@ -1,20 +1,23 @@
-# Usar la imagen base de .NET
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
 WORKDIR /app
-EXPOSE 80
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-WORKDIR /src
-COPY ["MELIPARCIAL.csproj", "./"]
-RUN dotnet restore "./MELIPARCIAL.csproj"
-COPY . .
-WORKDIR "/src/."
-RUN dotnet build "MELIPARCIAL.csproj" -c Release -o /app/build
 
-FROM build AS publish
-RUN dotnet publish "MELIPARCIAL.csproj" -c Release -o /app/publish
+COPY *.csproj ./
+RUN dotnet restore
 
-FROM base AS final
+
+COPY . ./
+RUN dotnet publish -c Release -o out
+
+
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
-COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "MELIPARCIAL.dll"]
+
+COPY --from=build-env /app/out ./
+
+
+ENV APP_NET_CORE MELIPARCIAL.dll 
+
+
+CMD ASPNETCORE_URLS=http://*:$PORT dotnet $APP_NET_CORE
